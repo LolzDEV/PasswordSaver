@@ -5,6 +5,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import base64
 import os
 import json
+from random import randint
 
 
 class App:
@@ -38,20 +39,32 @@ class App:
 
     def cancel(self):
         self.dialog.lineEdit.setText("")
-        self.dialog.lineEdit_2.setText("")
         self.DialogWindow.destroy()
 
+    def genPasswd(self):
+        alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
+                 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N',
+                 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+        symbols = ['+', '-', '/', '%', '&']
+        s = ""
+        for i in range(20):
+            r = randint(0, 51)
+            l = chr(ord(alpha[r]))
+            s = s + l
+        symb = symbols[randint(0, 4)]
+        s = symb + s + symb
+        return s
+
     def ok(self):
-        if not self.dialog.lineEdit.text() == "" and not self.dialog.lineEdit_2.text() == "" and not self.dialog.lineEdit_3.text() in self.pswd:
+        if not self.dialog.lineEdit.text() == "" and not self.dialog.lineEdit_3.text() in self.pswd:
             rowPosition = self.table.rowCount()
             self.table.insertRow(rowPosition)
             self.table.setColumnCount(3)
             self.table.setItem(rowPosition, 0, QtWidgets.QTableWidgetItem(self.dialog.lineEdit_3.text()))
             self.table.setItem(rowPosition, 1, QtWidgets.QTableWidgetItem(self.dialog.lineEdit.text()))
-            self.table.setItem(rowPosition, 2, QtWidgets.QTableWidgetItem(
-                str(base64.b85encode(bytes(self.dialog.lineEdit_2.text().encode("UTF-8"))))))
-            self.pswd[self.dialog.lineEdit_3.text()] = {"user": self.dialog.lineEdit.text(), "password": str(
-                base64.b85encode(bytes(self.dialog.lineEdit_2.text().encode("UTF-8"))))}
+            self.table.setItem(rowPosition, 2, QtWidgets.QTableWidgetItem(self.genPasswd()))
+            self.pswd[self.dialog.lineEdit_3.text()] = {"user": self.dialog.lineEdit.text(),
+                                                        "password": self.genPasswd()}
             json.dump(self.pswd, open(os.path.expanduser("~") + "/.passwordholder/passwords.json", "w"))
         self.loadTable()
         self.cancel()

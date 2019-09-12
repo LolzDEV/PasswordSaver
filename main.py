@@ -54,9 +54,6 @@ class Ui_Dialog(object):
         self.label = QtWidgets.QLabel(Dialog)
         self.label.setGeometry(QtCore.QRect(10, 40, 121, 17))
         self.label.setObjectName("label")
-        self.label_2 = QtWidgets.QLabel(Dialog)
-        self.label_2.setGeometry(QtCore.QRect(10, 130, 121, 17))
-        self.label_2.setObjectName("label_2")
         self.lineEdit_3 = QtWidgets.QLineEdit(Dialog)
         self.lineEdit_3.setGeometry(QtCore.QRect(10, 260, 281, 33))
         self.lineEdit_3.setObjectName("lineEdit_3")
@@ -77,7 +74,6 @@ class Ui_Dialog(object):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Add an account"))
         self.label.setText(_translate("Dialog", "Username/e-mail:"))
-        self.label_2.setText(_translate("Dialog", "Password:"))
         self.label_3.setText(_translate("Dialog", "Account service:"))
         self.pushButton.setText(_translate("Dialog", "Add"))
         self.pushButton_2.setText(_translate("Dialog", "Cancel"))
